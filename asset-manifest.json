@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/phase2-cust-app-markm/static/css/main.bda13371.css",
+    "main.js": "/phase2-cust-app-markm/static/js/main.ad035a07.js",
+    "index.html": "/phase2-cust-app-markm/index.html",
+    "main.bda13371.css.map": "/phase2-cust-app-markm/static/css/main.bda13371.css.map",
+    "main.ad035a07.js.map": "/phase2-cust-app-markm/static/js/main.ad035a07.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bda13371.css",
+    "static/js/main.ad035a07.js"
+  ]
+}
