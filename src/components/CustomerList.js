@@ -1,26 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {getAll} from '../memdb'
-import '../App.css';
+import React from 'react';
 
-function log(message){console.log(message);}
 export function CustomerList(params) {
-  let blankCustomer = { "id": -1, "name": "", "email": "", "password": "" };
-  const [customers, setCustomers] = useState([]);
-  const [formObject, setFormObject] = useState(blankCustomer);
-  useEffect(() => { getCustomers() }, []);
-
-  const getCustomers =  function(){
-    log("in getCustomers()");
-    setCustomers(getAll());
-  }
-
-  const handleListClick = function(item){
-    log("in handleListClick()");
-    if(formObject.id === item.id){
-      setFormObject(blankCustomer);
-    }
-    else setFormObject(item);   
-  }
   return (
     <div>
       <div className="boxed" >
@@ -34,11 +14,11 @@ export function CustomerList(params) {
             </tr>
           </thead>
           <tbody>
-            {customers.map(
+            {params.customers.map(
               (item, index) => {
                 return (<tr key={item.id} 
-                className={ (item.id === formObject.id )?'selected': ''}  
-                onClick={()=>handleListClick(item)} 
+                className={ (item.id === params.formObject.id )?'selected': ''}  
+                onClick={()=>params.handleListClick(item)} 
                 >
                   <td>{item.name}</td>
                   <td>{item.email}</td>

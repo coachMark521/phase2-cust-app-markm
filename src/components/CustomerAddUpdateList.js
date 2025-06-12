@@ -1,48 +1,10 @@
-import React, {useState} from 'react';
-import { post, put, deleteById } from '../memdb.js'
-import '../App.css';
+import React from 'react';
 
-function log(message){console.log(message);}
-export function CustomerAddUpdateList(params) {
-  let blankCustomer = { "id": -1, "name": "", "email": "", "password": "" };
-  const [formObject, setFormObject] = useState(blankCustomer);
-  let mode = (formObject.id >= 0) ? 'Update Customer' : 'Add Customer';
-
-  const handleInputChange = function (event) {
-    log("in handleInputChange()");
-    const name = event.target.name;
-    const value = event.target.value;
-    let newFormObject = {...formObject}
-    newFormObject[name] = value;
-    setFormObject(newFormObject);
-  }
-
-  let onCancelClick = function () {
-    log("in onCancelClick()");
-    setFormObject(blankCustomer);
-  }
-
-  let onDeleteClick = function () {
-    if(formObject.id >= 0){
-      deleteById(formObject.id);
-    }
-    setFormObject(blankCustomer);
-  }
-
-  let onSaveClick = function () {
-    if (mode === 'Add Customer') {
-      post(formObject);
-    }
-    if (mode === 'Update Customer') {
-      put(formObject.id, formObject);
-    }
-    setFormObject(blankCustomer);
-  }
-
-  return (      
+export function CustomerAddUpdateList(props) {
+   return (      
     <div className="boxed">
       <div>
-        <h4>{mode}</h4>
+        <h4>{props.mode}</h4>
       </div>
       <form >
         <table id="customer-add-update" >
@@ -52,8 +14,8 @@ export function CustomerAddUpdateList(params) {
               <td><input
                 type="text"
                 name="name"
-                onChange={(e) => handleInputChange(e)}
-                value={formObject.name}
+                onChange={(e) => props.handleInputChange(e)}
+                value={props.formObject.name}
                 placeholder="Customer Name"
                 required /></td>
             </tr>
@@ -62,8 +24,8 @@ export function CustomerAddUpdateList(params) {
               <td><input
                 type="email"
                 name="email"
-                onChange={(e) => handleInputChange(e)}
-                value={formObject.email}
+                onChange={(e) => props.handleInputChange(e)}
+                value={props.formObject.email}
                 placeholder="name@company.com" /></td>
             </tr>
             <tr>
@@ -71,15 +33,15 @@ export function CustomerAddUpdateList(params) {
               <td><input
                 type="password"
                 name="password"
-                onChange={(e) => handleInputChange(e)}
-                value={formObject.password}
+                onChange={(e) => props.handleInputChange(e)}
+                value={props.formObject.password}
                 placeholder="password" /></td>
             </tr>
             <tr className="button-bar">
               <td colSpan="2">
-                <input type="button" value="Delete" onClick={onDeleteClick} />
-                <input type="button" value="Save" onClick={onSaveClick} />
-                <input type="button" value="Cancel" onClick={onCancelClick} />
+                <input type="button" value="Delete" onClick={props.onDeleteClick} />
+                <input type="button" value="Save" onClick={props.onSaveClick} />
+                <input type="button" value="Cancel" onClick={props.onCancelClick} />
               </td>
             </tr>
           </tbody>
