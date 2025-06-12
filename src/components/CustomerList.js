@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function CustomerList(params) {
+export function CustomerList(props) {
   return (
     <div>
       <div className="boxed" >
@@ -14,11 +14,11 @@ export function CustomerList(params) {
             </tr>
           </thead>
           <tbody>
-            {params.customers.map(
+            {props.customers.map(
               (item, index) => {
                 return (<tr key={item.id} 
-                className={ (item.id === params.formObject.id )?'selected': ''}  
-                onClick={()=>params.handleListClick(item)} 
+                className={ (item.id === props.formObject.id )?'selected': ''}  
+                onClick={()=>props.handleListClick(item)} 
                 >
                   <td>{item.name}</td>
                   <td>{item.email}</td>
