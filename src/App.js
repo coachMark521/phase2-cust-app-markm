@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getAll, post, put, deleteById } from './memdb.js'
-//import { validEmail, validName, validPassword } from './components/Regex.js'
+import { getAll, post, put, deleteById } from './restdb.js'
+import { validEmail, validName, validPassword } from './components/Regex.js'
 import './App.css';
 import CustomerList from './components/CustomerList';
 import CustomerAddUpdateList from './components/CustomerAddUpdateList';
@@ -11,11 +11,11 @@ export function App(params) {
   const [customers, setCustomers] = useState([]);
   const [formObject, setFormObject] = useState(blankCustomer);
   let mode = (formObject.id >= 0) ? 'Update Customer' : 'Add Customer';
-  useEffect(() => { getCustomers() }, []);
+  useEffect(() => { getCustomers() }, [formObject]);
 
   const getCustomers =  function(){
     log("in getCustomers()");
-    setCustomers(getAll());
+    getAll(setCustomers);
   }
 
   const handleListClick = function(item){
@@ -26,7 +26,7 @@ export function App(params) {
     }
     else setFormObject(item);   
   }
-/*Validation of Name, Email, Password
+//Validation of Name, Email, Password
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +44,7 @@ export function App(params) {
          setPwdError(true);
       }
     }    
-*/
+
   const handleInputChange = function (event) {
     log("in handleInputChange()");
     const name = event.target.name;
@@ -60,20 +60,23 @@ export function App(params) {
   }
 
   let onDeleteClick = function () {
-    if(formObject.id >= 0){
-      deleteById(formObject.id);
+    let postopCallback = () => { setFormObject(blankCustomer); }
+    if (formObject.id >= 0) {
+      deleteById(formObject.id, postopCallback);
+    } 
+    else {
+      setFormObject(blankCustomer); 
     }
-    setFormObject(blankCustomer);
   }
 
   let onSaveClick = function () {
-    if (mode === 'Add Customer') {
-      post(formObject);
+    let postopCallback = () => { setFormObject(blankCustomer); }
+    if (mode === 'Add') {
+      post(formObject, postopCallback);
     }
-    if (mode === 'Update Customer') {
-      put(formObject.id, formObject);
+    if (mode === 'Update') {
+      put(formObject, postopCallback);
     }
-    setFormObject(blankCustomer);
   }
 
    let passProps = {
