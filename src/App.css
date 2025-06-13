@@ -42,12 +42,12 @@ form{
 
 div#root {
     background-color: lightgrey;
-    width: 350px;
+    width: 550px;
 }
 
 .boxed {
     border: 1.5px solid #aaa;
-    width: 315px;
+    width: 500px;
     margin: 10px;
     background-color: #bababa;
     display: inline-block;

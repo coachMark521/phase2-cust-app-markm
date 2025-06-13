@@ -10,7 +10,7 @@ export function App(params) {
   let blankCustomer = { "id": -1, "name": "", "email": "", "password": "" };
   const [customers, setCustomers] = useState([]);
   const [formObject, setFormObject] = useState(blankCustomer);
-  let mode = (formObject.id >= 0) ? 'Update Customer' : 'Add Customer';
+  let mode = (formObject.id !== -1) ? 'Update Customer' : 'Add Customer';
   useEffect(() => { getCustomers() }, [formObject]);
 
   const getCustomers =  function(){
@@ -71,10 +71,10 @@ export function App(params) {
 
   let onSaveClick = function () {
     let postopCallback = () => { setFormObject(blankCustomer); }
-    if (mode === 'Add') {
+    if (mode === 'Add Customer') {
       post(formObject, postopCallback);
     }
-    if (mode === 'Update') {
+    if (mode === 'Update Customer') {
       put(formObject, postopCallback);
     }
   }
